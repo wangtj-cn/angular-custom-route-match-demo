@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
+  template: `
+  <p>
+    Hello {{ username$ | async }}!
+  </p>
+`,
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
-  constructor() { }
+  username$ = this.route.paramMap.pipe(
+    map((params: ParamMap) => params.get('username'))
+  );
 
-  ngOnInit(): void {
-  }
+  constructor(private route: ActivatedRoute) { }
 
 }
